@@ -1,35 +1,36 @@
 import Address from "./address";
 
-class Customer {
+export default class Customer {
 
-    _id: string;
-    _name: string;
-    _address!: Address;
-    _active: boolean;
+    private _id: string;
+    private _name: string;
+    private _address!: Address;
+    private _active: boolean;
 
 
-    public set address(address: Address) {
-        this._address = address;
-    }
-
-    constructor(id: string, name:string,address:string){
+    
+    constructor(id: string, name:string){
         this._id = id;
         this._name = name;
         this._active = true;
         this.validate();
-    }
-
+    }   
+    
     validate(){
         if(this._id.length === 0){
-            throw new Error("Id is Required");
+            throw new Error("Id is required");
         }
         if(this._name.length === 0){
-            throw new Error("Name is Required");
+            throw new Error("Name is required");
         }
 
     }
 
-    changeName(id: string,name: string){
+    isActive(): boolean{
+        return this._active;
+    }
+
+    changeName(name: string){
         this._name = name;
         this.validate();
     }
@@ -48,4 +49,12 @@ class Customer {
         this.validate();
     }
     
+    get name(): string {
+        return this._name;
+    }
+
+    public set address(address: Address) {
+        this._address = address;
+    }
+
 }
