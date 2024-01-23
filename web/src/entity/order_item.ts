@@ -1,25 +1,27 @@
+import Product from "./product";
+
 export default class OrderItem {
     
     private _id: string;
-    private _productId: string;
     private _name: string;
     private _price: number;
     private _quantity: number;
+    private _productId: string;
     private _total: number;
   
     constructor(
       id: string,
       name: string,
       price: number,
-      productId: string,
-      quantity: number
+      quantity: number,
+      productId: string
     ) {
       this._id = id;
       this._name = name;
       this._price = price;
-      this._productId = productId;
       this._quantity = quantity;
-      this._total = this.total();
+      this._productId = productId;
+      this._total = this.orderItemTotal();
     }
   
     get id(): string {
@@ -29,11 +31,7 @@ export default class OrderItem {
     get name(): string {
       return this._name;
     }
-  
-    get productId(): string {
-      return this._productId;
-    }
-  
+
     get quantity(): number {
       return this._quantity;
     }
@@ -41,8 +39,8 @@ export default class OrderItem {
     get price(): number {
       return this._price;
     }
-  
-    total(): number {
-      return this._price * this._quantity
+
+    orderItemTotal(): number {
+      return this._price * this._quantity;
     }
   }
