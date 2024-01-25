@@ -1,0 +1,19 @@
+import EventInterface from "../@shared/event.interface";
+
+export default class ProductCreatedEvent  implements EventInterface {
+  private _dataTimeOccurred: Date;
+  private _eventData: any;
+  
+  constructor(eventData: any) {
+    this._dataTimeOccurred = new Date();
+    this._eventData = eventData;
+  }
+
+  get dataTimeOccurred(): Date {
+    return this._dataTimeOccurred;
+  }
+
+  get eventData(): any {
+    return this._eventData;
+  }
+}

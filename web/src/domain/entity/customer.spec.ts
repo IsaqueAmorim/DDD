@@ -1,5 +1,5 @@
-import Address from "../../../domain/entity/address";
-import Customer from "../../../domain/entity/customer";
+import Address from "./address";
+import Customer from "./customer";
 
 describe("Customer unit tests", () => {
 
@@ -38,7 +38,7 @@ describe("Customer unit tests", () => {
     it("should activate customer", () => {
         expect(() => {
             let customer = new Customer("123", "Jhon");
-            customer.address = new Address("street", 123, "state", "country", "zip");
+            customer.changeAddress(new Address("street", 123, "state", "zip"));
             customer.active();
             expect(customer.isActive).toBe(true);
         });
