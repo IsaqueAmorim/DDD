@@ -81,4 +81,97 @@ describe("Order repository test", () => {
       ],
     });
   });
+
+  it("should find all orders", async () => {
+
+    const customer = new Customer("123", "Customer 1");
+    const address = new Address("Street 1", 1, "Zipcode 1", "City 1");
+    customer.changeAddress(address);
+    
+    const customerRepository = new CustomerRepository();
+    await customerRepository.create(customer);
+
+    const product1 = new Product("123", "Product 1", 10);
+    const product2 = new Product("321", "Product 1", 10);
+    
+    const productRepository = new ProductRepository();
+    await productRepository.create(product1);
+    await productRepository.create(product2);
+
+    const orderItem1 = new OrderItem(
+      "1",
+      product1.name,
+      product1.price,
+      product1.id,
+      2
+    );
+
+    const orderItem2 = new OrderItem(
+      "2",
+      product2.name,
+      product2.price,
+      product2.id,
+      2
+    );
+
+    const order1 = new Order("123", "123", [orderItem1]);
+    const order2 = new Order("321", "123", [orderItem2]);
+
+
+    const orderRepository = new OrderRepository();
+    await orderRepository.create(order1);
+    await orderRepository.create(order2);
+
+    const orders = await orderRepository.findAll();
+
+    expect(orders.length).toBe(2);
+    expect(orders).toEqual([order1, order2]);
+    expect(orders[0].items).toEqual([orderItem1]);
+    expect(orders[1].items).toEqual([orderItem2]);
+  });
+
+  it("should a update order", async () => {
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer("123", "Customer 1");
+    const address = new Address("Street 1", 1, "Zipcode 1", "City 1");
+    customer.changeAddress(address);
+    await customerRepository.create(customer);
+
+    const productRepository = new ProductRepository();
+    const product1 = new Product("123", "Product 1", 10);
+    const product2 = new Product("321", "Product 2", 10);
+    await productRepository.create(product1);
+    await productRepository.create(product2);
+
+
+    const orderItem1 = new OrderItem(
+      "1",
+      product1.name,
+      product1.price,
+      product1.id,
+      2
+    );
+
+    const orderItem2 = new OrderItem(
+      "2",
+      product2.name,
+      product2.price,
+      product2.id,
+      2
+    );
+
+    const order = new Order("123", "123", [orderItem1]);
+
+    const orderRepository = new OrderRepository();
+    await orderRepository.create(order);
+
+    const orderUpdated = order.update([orderItem2]);
+
+    expect(orderUpdated.items).toEqual([orderItem2]);
+    expect(orderUpdated.total()).toBe(20);
+    expect(orderUpdated.id).toBe("123");
+    expect(orderUpdated.customerId).toBe("123");
+    
+  });
+
 });

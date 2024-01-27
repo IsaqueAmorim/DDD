@@ -10,13 +10,13 @@ export default class Customer {
 
 
     
-    constructor(id: string, name:string){
+    constructor(id: string,name:string){
         this._id = id;
         this._name = name;
         this._active = true;
         this._rewardPoints = 0;
         this.validate();
-    }   
+    }
     
     validate(){
         if(this._id.length === 0){
