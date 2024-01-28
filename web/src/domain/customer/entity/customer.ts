@@ -1,3 +1,5 @@
+import EventRegisterService from "../../@shared/service/event-injection.service";
+import CustomerAddressChangedEvent from "../event/customer-address-changed.event";
 import Address from "../value-objects/address";
 
 export default class Customer {
@@ -8,8 +10,6 @@ export default class Customer {
     private _address: Address;
     private _active: boolean;
 
-
-    
     constructor(id: string,name:string){
         this._id = id;
         this._name = name;
@@ -17,7 +17,7 @@ export default class Customer {
         this._rewardPoints = 0;
         this.validate();
     }
-    
+
     validate(){
         if(this._id.length === 0){
             throw new Error("Id is required");
@@ -25,7 +25,6 @@ export default class Customer {
         if(this._name.length === 0){
             throw new Error("Name is required");
         }
-
     }
 
     isActive(): boolean{
@@ -57,6 +56,19 @@ export default class Customer {
 
     changeAddress(address: Address) {
         this._address = address;
+        this.validate();
+
+        new EventRegisterService().dispacher.notify(
+            new CustomerAddressChangedEvent
+            ({
+                id: this._id,
+                name: this._name,
+                street: address.street,
+                number: address.number,
+                city: address.city,
+                cep: address.zip
+            })
+        );
     }
 
     get id(): string {

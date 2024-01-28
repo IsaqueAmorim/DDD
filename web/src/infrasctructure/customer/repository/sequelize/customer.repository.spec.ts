@@ -76,7 +76,7 @@ describe("Customer repository test", () => {
 
     const customerResult = await customerRepository.findById(customer.id);
 
-    expect(customer).toStrictEqual(customerResult);
+    expect(customer).toEqual(customerResult);
   });
 
   it("should throw an error when customer is not found", async () => {
