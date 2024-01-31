@@ -106,7 +106,7 @@ describe("Customer repository test", () => {
     const customers = await customerRepository.findAll();
 
     expect(customers).toHaveLength(2);
-    //expect(customers).toContainEqual(customer1);
-    //expect(customers).toContainEqual(customer2);
+    expect(customers).toContainEqual(customer1);
+    expect(customers).toContainEqual(customer2);
   });
 });
